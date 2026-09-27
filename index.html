@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>愛玉生日快樂！</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 藍白細緻粒子畫布 -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- 第一介面：禮物盒封面 -->
+  <section id="page1" class="page-section active">
+    <div class="header-group">
+      <div class="title-drop">🎉 生日快樂！！</div>
+      <div class="name-rise">愛玉 🩵</div>
+    </div>
+    
+    <div class="gift-area">
+      <img src="img1/gift.png" alt="禮物盒" class="gift-btn-img" id="giftBtn" onclick="clickGift()">
+    </div>
+
+    <div class="side-popper-group left">
+      <img src="img1/popper-left.png" alt="拉炮" class="popper-img">
+    </div>
+
+    <div class="side-popper-group right">
+      <img src="img1/popper-left.png" alt="拉炮" class="popper-img">
+    </div>
+  </section>
+
+  <!-- 第二介面：愛玉人物互動 -->
+  <section id="page2" class="page-section">
+    <div class="aiyu-container">
+      <img id="aiyu" src="img2/aiyu_normal.png" alt="愛玉" class="aiyu-img idle-swing">
+      <!-- 看完第四介面後解鎖的隱藏貓貓 -->
+      <img id="cat-companion" src="img2/cat.png" alt="貓貓" class="cat-companion hidden">
+    </div>
+
+    <!-- 可拖動道具 (手 / 蛋糕) -->
+    <img id="drag-hand" src="img2/btn_hand.png" alt="手" class="drag-item hidden">
+    <img id="drag-cake" src="img2/btn_cake.png" alt="蛋糕" class="drag-item hidden">
+
+    <!-- 左下角選單 -->
+    <div class="left-bottom-menu">
+      <button id="menu-toggle-btn" class="btn-subtle round-btn">☰</button>
+      <div id="sub-menu" class="sub-menu hidden">
+        <button id="btn-hand" class="btn-subtle tool-btn" title="摸頭手">
+          <img src="img2/btn_hand.png" alt="手">
+        </button>
+        <button id="btn-cake" class="btn-subtle tool-btn" title="蛋糕">
+          <img src="img2/btn_cake.png" alt="蛋糕">
+        </button>
+        <button id="btn-hat" class="btn-subtle tool-btn hat-btn" title="切換生日帽">🎩</button>
+        <button id="btn-cat" class="btn-subtle tool-btn hidden" title="隱藏貓貓">🐱</button>
+      </div>
+    </div>
+
+    <!-- 右側貼邊小按鈕 -->
+    <div class="right-sidebar">
+      <button id="btn-reset-character" class="btn-subtle small-round-btn" title="回到人物">👤</button>
+      <button id="btn-go-letter" class="btn-subtle small-round-btn" title="看祝福信">✉️</button>
+    </div>
+  </section>
+
+   <!-- 第三介面：祝福信件（信封樣式） -->
+  <section id="page3" class="page-section">
+    <div class="envelope-wrapper" id="envelopeWrapper">
+      <!-- 信封蓋子 -->
+      <div class="envelope-flap"></div>
+      <!-- 信封口袋 -->
+      <div class="envelope-pocket"></div>
+      
+      <!-- 信紙本體 -->
+      <div class="letter-paper">
+        <h2 class="letter-title">給愛玉的生日祝福 💙</h2>
+        <div class="letter-content"></div>
+        <button id="btn-go-p4" class="back-btn">查看驚喜彩蛋 🎁</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第四介面：秘密彩蛋圖片 -->
+  <section id="page4" class="page-section">
+    <div class="secret-card">
+      <img src="img4/secret.png" alt="秘密圖片" class="secret-img">
+      <div class="mickey-text-bounce">去找米奇要完整圖片！</div>
+      <button id="btn-back-to-p2-from-p4" class="back-btn" style="margin-top: 20px;">返回人物互動</button>
+    </div>
+  </section>
+
+  <script src="letterData.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

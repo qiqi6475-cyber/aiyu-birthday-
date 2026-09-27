@@ -1,0 +1,496 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  touch-action: manipulation;
+  background: #ffeef2;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 藍白細緻粒子畫布 */
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* 通用頁面切換容器 */
+.page-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.page-section.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==================== 第一介面 ==================== */
+#page1 {
+  z-index: 10;
+  background: url('img1/background.png') no-repeat center center / cover #fff8f0;
+}
+
+#page1::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 15%;
+  z-index: 5;
+  animation: floatAnim 3s ease-in-out infinite alternate;
+}
+
+.title-drop {
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: -2px -2px 0 #d0d0d0, 2px -2px 0 #d0d0d0, -2px 2px 0 #d0d0d0, 2px 2px 0 #d0d0d0, 0px 4px 10px rgba(0,0,0,0.15);
+  animation: dropDown 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.27) forwards;
+}
+
+.name-rise {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-top: 8px;
+  text-shadow: -2px -2px 0 #d0d0d0, 2px -2px 0 #d0d0d0, -2px 2px 0 #d0d0d0, 2px 2px 0 #d0d0d0, 0px 4px 10px rgba(0,0,0,0.15);
+  animation: riseUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.27) forwards;
+}
+
+@keyframes dropDown { 0% { transform: translateY(-150px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes riseUp { 0% { transform: translateY(150px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes floatAnim { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
+
+.gift-area {
+  position: absolute;
+  top: 48%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.27) 0.3s forwards;
+  z-index: 5;
+}
+
+@keyframes popIn { 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+
+.gift-btn-img {
+  width: 190px;
+  height: auto;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.18));
+  transform-origin: center center;
+}
+
+.side-popper-group {
+  position: absolute;
+  top: 55%;
+  z-index: 3;
+  pointer-events: none;
+}
+.side-popper-group.left { left: 0px; transform: translateY(-50%); }
+.side-popper-group.right { right: 0px; transform: translateY(-50%) scaleX(-1); }
+.popper-img { width: 110px; height: auto; }
+
+.falling-confetti {
+  position: absolute;
+  top: 50%;
+  width: 90px;
+  height: auto;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 1;
+  transition: top 2.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 2.2s ease-in;
+}
+
+.jelly-active { animation: jelly 0.5s ease; }
+@keyframes jelly {
+  0% { transform: scale(1, 1); }
+  25% { transform: scale(1.25, 0.75); }
+  50% { transform: scale(0.8, 1.2); }
+  65% { transform: scale(1.1, 0.9); }
+  80% { transform: scale(0.95, 1.05); }
+  100% { transform: scale(1, 1); }
+}
+
+/* ==================== 第二介面 ==================== */
+#page2 {
+  z-index: 5;
+  background: url('img2/bg2.png') no-repeat center center / cover #ffeef2;
+}
+
+.aiyu-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.aiyu-img {
+  max-height: 70vh;
+  max-width: 80vw;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.idle-swing {
+  animation: swing 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes swing {
+  0% { transform: rotate(-3deg); }
+  100% { transform: rotate(3deg); }
+}
+
+.head-pat-swing {
+  animation: patSwing 0.8s ease-in-out infinite alternate !important;
+}
+
+@keyframes patSwing {
+  0% { transform: rotate(-8deg) scale(1.02); }
+  100% { transform: rotate(8deg) scale(1.02); }
+}
+
+/* 愛玉吃到蛋糕：與貓貓同款超 Q 彈動態 */
+.eat-bounce {
+  animation: eatBounce 0.6s ease infinite alternate;
+}
+
+@keyframes eatBounce {
+  0% { 
+    transform: scale(1) translateY(0); 
+  }
+  30% { 
+    transform: scale(1.2, 0.8) translateY(12px); 
+  }
+  60% { 
+    transform: scale(0.85, 1.15) translateY(-16px); 
+  }
+  100% { 
+    transform: scale(1) translateY(0); 
+  }
+}
+
+/* 貓貓樣式與 Q 彈彈跳 */
+.cat-companion {
+  position: absolute;
+  bottom: -20px;
+  right: -25%;
+  width: 170px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s ease, opacity 0.5s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.cat-pat-bounce {
+  animation: catBounce 0.6s ease infinite alternate;
+}
+
+@keyframes catBounce {
+  0% { transform: scale(1) translateY(0); }
+  30% { transform: scale(1.2, 0.8) translateY(8px); }
+  60% { transform: scale(0.85, 1.15) translateY(-12px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.btn-subtle {
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  border-radius: 50%;
+  color: #555;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-subtle:active {
+  transform: scale(0.85) !important;
+}
+
+.left-bottom-menu {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+}
+
+.round-btn {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+}
+
+.sub-menu {
+  display: flex;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 6px 12px;
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.tool-btn {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.tool-btn img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.right-sidebar {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 100;
+}
+
+.small-round-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.drag-item {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  z-index: 200;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.drag-item:active {
+  cursor: grabbing;
+}
+
+/* ==================== 第三介面：天空藍立體信封 ==================== */
+#page3 {
+  z-index: 8;
+  background: rgba(240, 248, 255, 0.98);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.envelope-wrapper {
+  position: relative;
+  width: 320px;
+  height: 200px;
+  background: #a0c4ff;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 15px 35px rgba(141, 182, 235, 0.35);
+  cursor: pointer;
+  transition: transform 0.4s ease;
+  margin-top: 50px; /* 把信封整體往下拉，預留上方空間 */
+}
+
+/* 信封蓋子 (天空藍三角摺頁) */
+.envelope-flap {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 110px solid #82b1ff;
+  transform-origin: top;
+  transition: transform 0.6s ease 0.2s, z-index 0.2s ease 0.4s;
+  z-index: 3;
+}
+
+/* 信封口袋 */
+.envelope-pocket {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 0;
+  border-left: 160px solid #b5d8ff;
+  border-right: 160px solid #b5d8ff;
+  border-bottom: 100px solid #90c2ff;
+  border-radius: 0 0 15px 15px;
+  z-index: 2;
+}
+
+/* 信紙 */
+.letter-paper {
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+  width: 290px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 12px;
+  padding: 15px 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 1;
+  transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.27) 0.5s, height 0.5s ease 0.8s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.letter-title {
+  color: #3a86ff;
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+/* 信件內容區：支援內文滾動 */
+.letter-content {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.7; /* 加大行高，閱讀更舒服 */
+  overflow-y: auto;
+  max-height: 100%;
+  width: 100%;
+  padding-right: 4px;
+  text-align: left; /* 文字靠左對齊，讀長文更順眼 */
+}
+
+/* 滾動條美化 */
+.letter-content::-webkit-scrollbar {
+  width: 4px;
+}
+.letter-content::-webkit-scrollbar-thumb {
+  background: #a0c4ff;
+  border-radius: 4px;
+}
+
+/* 半透明質感按鈕 */
+.back-btn {
+  padding: 6px 18px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(141, 182, 235, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #2b6cb0;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  margin-top: 6px;
+}
+
+.back-btn:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* 點擊信封展開動畫效果 */
+.envelope-wrapper.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+.envelope-wrapper.open .letter-paper {
+  transform: translateY(-130px); /* 往上抽得更高 */
+  height: 310px; /* 信紙抽出來後變超長！大空間好閱讀 */
+  z-index: 4;
+}
+
+/* ==================== 第四介面 ==================== */
+#page4 {
+  z-index: 9;
+  background: rgba(255, 240, 245, 0.98);
+}
+
+.secret-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 90vw;
+}
+
+.secret-img {
+  max-width: 80vw;
+  max-height: 55vh;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* 米奇跳動文字 */
+.mickey-text-bounce {
+  margin-top: 18px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff5277;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  animation: gentleBounce 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes gentleBounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
